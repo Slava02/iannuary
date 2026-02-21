@@ -1,0 +1,60 @@
+version: '3'
+
+vars:
+  REPO_URL: https://github.com/Slava02/iannuary
+
+tasks:
+  default:
+    desc: Показать список команд
+    cmds:
+      - task --list
+
+  serve:
+    desc: Запустить локальный сервер Hugo
+    cmds:
+      - hugo server -D --navigateToChanged
+
+  build:
+    desc: Собрать сайт (public/)
+    cmds:
+      - hugo --gc --minify
+
+  clean:
+    desc: Удалить public/
+    cmds:
+      - rm -rf public
+
+  new:
+    desc: Создать новую статью (task new -- "letters/section/article.md")
+    cmds:
+      - hugo new content {{.CLI_ARGS}}
+
+  init:
+    desc: Инициализировать git и подключить remote
+    cmds:
+      - git init
+      - git remote add origin {{.REPO_URL}}.git
+      - git add .
+      - git commit -m "Initial commit"
+      - git branch -M main
+      - git push -u origin main
+    status:
+      - test -d .git
+
+  push:
+    desc: Закоммитить и запушить изменения
+    cmds:
+      - git add .
+      - git diff --cached --quiet || git commit -m "Update content"
+      - git push
+
+  deploy:
+    desc: Собрать и запушить (триггерит деплой на GitHub Pages)
+    cmds:
+      - task: build
+      - task: push
+
+  sync:
+    desc: Синхронизировать субмодуль темы
+    cmds:
+      - git submodule update --init --recursive

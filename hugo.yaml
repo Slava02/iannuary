@@ -1,0 +1,39 @@
+baseURL: https://slava02.github.io/iannuary/
+languageCode: ru
+title: Архимандрит Ианнуарий (Ивлиев)
+theme: hugo-book
+
+# Кэш для GitHub Actions
+caches:
+  images:
+    dir: :cacheDir/images
+
+# Настройки для русского языка
+languages:
+  ru:
+    languageName: Русский
+    weight: 1
+
+# Настройки темы Book
+params:
+  BookSection: '*'
+  BookRepo: ''
+  BookCommitPath: commit
+  BookEditPath: edit/main/exampleSite/content
+  BookDateFormat: '2 January 2006'
+  BookSearch: true
+  BookComments: false
+  BookPortableLinks: true
+  BookServiceWorker: false
+  BookToc: true
+  BookLogo: /logo.png
+
+# Markdown настройки
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  tableOfContents:
+    startLevel: 1
+    endLevel: 6
+
